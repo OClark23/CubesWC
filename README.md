@@ -5,3 +5,19 @@ This is a capstone project for the CUBE initiative at BSU This project will invo
 
 Wufoo form setup 
 https://oclark.wufoo.com/build/untitled-form
+
+
+
+Dependencies: A procedural interface is provided by the companion pyplot module,
+which may be imported directly, e.g.::
+
+    import matplotlib.pyplot as plt
+
+or using ipython::
+
+    ipython
+
+at your terminal, followed by::
+
+    In [1]: %matplotlib
+    In [2]: import matplotlib.pyplot as plt
