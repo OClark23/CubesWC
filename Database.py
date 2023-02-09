@@ -11,26 +11,33 @@ def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
 
 
 def setup_db(cursor: sqlite3.Cursor):
-    cursor.execute('''CREATE TABLE IF NOT EXISTS students(
- banner_id INTEGER PRIMARY KEY,
- first_name TEXT NOT NULL,
- last_name TEXT NOT NULL,
- gpa REAL DEFAULT 0,
- credits INTEGER DEFAULT 0
+    cursor.execute('''CREATE TABLE IF NOT EXISTS wuffoo(
+ title_name INTEGER PRIMARY KEY,
+ organization_name TEXT NOT NULL,
+ email_name TEXT NOT NULL,
+ website_name TEXT NOT NULL,
+ phone_number TEXT NOT NULL,
+ Oppurtunities_interested REAL DEFAULT,
+ name_permission REAL DEFAULT,
  );''')
 
-
 def create_entries_tables(cursor: sqlite3.Cursor):
-    values_in_the_table = [(1, ' Warren',
-                            'Clark',
-                            4.0,
-                            120
+    values_in_the_table = [(2, 'Cube project',
+                            'Lorem Ipsum',
+                            'fbar@org.com',
+                            'org.com',
+                            '888-123-4567',
+                            'none',
+                            'yes'
                             ),
-                           (2,"Santore",
-                            "John",
-                            4.7,
-                            10000)]
-    cursor.executemany("INSERT INTO students VALUES(?,?,?,?,?);", values_in_the_table)
+                           (3,'Cube project',
+                            'differ env',
+                            'hackbar@org.com',
+                            'org.com',
+                            '888-272-1723',
+                            'Networking Event,Career Panel,Internships',
+                            'yes')]
+    cursor.executemany("INSERT INTO students VALUES(?,?,?,?,?,?,?);", values_in_the_table)
 
 
 def close_db(connection: sqlite3.Connection):
