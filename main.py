@@ -1,46 +1,47 @@
-import json
-import sys
 import requests
-import response as response
-from eventlet.green import urllib2
+import sys
+from secrets import wufoo_key  # add a secrets file with wufoo_key='YoUr-WuFoo-KeY-Here'
 from requests.auth import HTTPBasicAuth
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
 from secrets import wufoo_key
+# from Database import open_db, close_db, create_entries_tables, setup_db
+from Database import my_data
 
-base_url = 'https://oclark.wufoo.com/api/v3/'
-username = wufoo_key
-password = 'NewPassword'
+# adjust this to your URL
+url = "https://oclark.wufoo.com/api/v3/forms/cubes-project/entries.json"
 
-file1    = open('entries_file.txt', 'w')
-file1 = open('entries_file.txt', 'a')
 
-def get_forms():
-    response = requests.get(base_url+ "forms/cubes-project-proposal-", "submission.json")
-        auth = (username, password))
-    data1 = json.loads(response.text)
-    print(json.dumps(data1, indent=4, sort_keys=true))
 def get_wufoo_data() -> dict:
-    url = "https://oclark.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries.json"
     response = requests.get(url, auth=HTTPBasicAuth(wufoo_key, 'pass'))
     if response.status_code != 200:  # if we don't get an ok response we have trouble
         print(f"Failed to get data, response code:{response.status_code} and error message: {response.reason} ")
-    sys.exit(-1)
+        sys.exit(-1)
     jsonresponse = response.json()
-    return jsonresponse  # json response will be either a dictionary or a list of dictionaries
-
-def get_fields():
-    data = json.loads(response.text)
-    wufooxtxt.write(str(data))
+    return jsonresponse
 
 
-response = requests.get(base_url + 'cubes-project.json/entries')
+def main():
+    data = get_wufoo_data()
+    data1 = data['Entries']
+    file_to_save = open("output.txt", 'w')
+    save_data(data1, save_file=file_to_save)
+
+    #connection, cursor = open_db("Entries.db")
+    #create_entries_tables(cursor)
+    #close_db(connection)
+    #setup_db()
 
 
-# each dictionary represents a json object
-def get_wufooform():
-    response = requests.get(base_url + 'cubes-project.json')
+def save_data(data_to_save: list, save_file=None):
+    for entry in data_to_save:
+        for key, value in entry.items():
+            print(f"{key}: {value}", file=save_file)
+        # now print the spacer
+        print("+++++++++++++++++++++++++++++++++++++++++++++\n_______________________________________________",
+              file=save_file)
 
 
+# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    get_wufoo_data()
+    #main()
+
+    my_data()
