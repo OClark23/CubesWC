@@ -30,3 +30,5 @@ at your terminal, followed by::
 
     In [1]: %matplotlib
     In [2]: import matplotlib.pyplot as plt
+
+Install: @pytest.fixture
