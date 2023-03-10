@@ -1,3 +1,4 @@
+import tkinter as tk
 import tkinter.ttk as ttk
 
 
@@ -32,3 +33,13 @@ def set_style():
     # Set the hover and active background color of the submit button
     style.map('Submit.TButton', background=[('active', '#3e8e41'), ('hover', '#3e8e41')])
 
+    # Define the create_entry_gui function
+    def create_entry_gui():
+
+
+    # Return the style object
+        return style
+
+
+def create_entry_gui():
+    return None

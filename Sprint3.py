@@ -53,12 +53,21 @@ def add_entry_to_db(db_cursor: sqlite3.Cursor, entry_data: Dict[str, Union[str, 
         # Set a default value if entryID is empty
         entry_values[0] = None
 
+    # create the table if it doesn't exist
+    db_cursor.execute('''
+        CREATE TABLE IF NOT EXISTS entries (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            hours INTEGER NOT NULL,
+            description TEXT NOT NULL,
+            entryID INTEGER PRIMARY KEY AUTOINCREMENT
+        )
+    ''')
+
     db_cursor.execute("""
-        INSERT INTO entries (entryID, prefix, first_name, last_name, title, org, email, website, course_project,
-        guest_speaker, site_visit, job_shadow, internship, career_panel, networking_event, subject_area, description,
-        funding, created_date, created_by)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, entry_values)
+        INSERT INTO entries (entryID, date, hours, description)
+        VALUES (?, ?, ?, ?)
+    """, entry_values[0:4])
 
 
 def on_submit(db_cursor: sqlite3.Cursor, entry_data: dict, entry_fields: dict):
@@ -102,7 +111,6 @@ def create_entry_gui(db_cursor: sqlite3.Cursor, root: tk.Tk):
     partial_on_submit = partial(on_submit, db_cursor, entry_data, entry_fields)
     submit_button = tk.Button(root, text="Submit", command=partial_on_submit)
     submit_button.grid(row=len(entry_fields), column=0, columnspan=2)
-
 
 
 if __name__ == "__main__":
